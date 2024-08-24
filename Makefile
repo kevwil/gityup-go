@@ -9,7 +9,7 @@ all: clean vendor lint test
 clean:
 	@echo "\n*** go clean stuff\n"
 	@go clean -i -v .
-	@rm -f $(APP_NAME)
+	@rm -f gityup-*
 
 ## vendors       : go mod dependencies
 vendor: go.mod

@@ -41,8 +41,16 @@ func (suite *MainTestSuite) TestIsGit() {
 	suite.True(isGit(handleTilde("~/dotfiles")))
 }
 
+func (suite *MainTestSuite) TestIsGit_False() {
+	suite.False(isGit(handleTilde("~/Downloads")))
+}
+
 func (suite *MainTestSuite) TestGitStatus() {
 	suite.True(gitStatus(handleTilde("~/dotfiles")))
+}
+
+func (suite *MainTestSuite) TestGitStatus_False() {
+	suite.False(gitStatus(handleTilde("~/Downloads")))
 }
 
 func (suite *MainTestSuite) TestGetBranchName() {

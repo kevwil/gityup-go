@@ -29,7 +29,7 @@ func parseArgs() string {
 	argVal := handleTilde(flag.Arg(0))
 	absDir, err := filepath.Abs(argVal)
 	if err != nil {
-		_ = fmt.Errorf("Error resolving absolute path to '%s': %v\n", argVal, err)
+		_ = fmt.Errorf("error resolving absolute path to '%s': %v", argVal, err)
 		os.Exit(1)
 	}
 	return absDir
@@ -45,14 +45,14 @@ func checkExecExists(executable string) (string, error) {
 func isGit(path string) bool {
 	gitSubDir, err := filepath.Abs(filepath.Join(path, ".git"))
 	if err != nil {
-		_ = fmt.Errorf("Error resolving absolute path to '%s': %v\n", path, err)
+		_ = fmt.Errorf("error resolving absolute path to '%s': %v", path, err)
 	}
 	info, err := os.Stat(gitSubDir)
 	if err != nil {
 		if os.IsNotExist(err) {
 			return false
 		} else {
-			_ = fmt.Errorf("Error checking if git subdir exists: %v\n", err)
+			_ = fmt.Errorf("error checking if git subdir exists: %v", err)
 		}
 	}
 	return info.IsDir()
