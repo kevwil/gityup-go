@@ -30,6 +30,7 @@ make build
 
 ```bash
 export GOOS=linux
+export GOARCH=amd64
 make build
 ```
 

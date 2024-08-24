@@ -1,6 +1,6 @@
 .PHONY: help all vendor build test run
 
-APP_NAME=gityup-$(shell go env GOOS)
+APP_NAME=gityup-$(shell go env GOOS)-$(shell go env GOARCH)
 
 ## all           : run default tasks [clean vendor lint test]
 all: clean vendor lint test
