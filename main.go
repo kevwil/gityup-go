@@ -147,7 +147,7 @@ func updateProjects(path string) {
 						if !gitRemote(fullFilePath, branchName) {
 							fmt.Println("no remote to pull from, skipping ", fullFilePath)
 						} else {
-							fmt.Printf("#### pulling %s ####\n", fullFilePath)
+							fmt.Println("#### pulling", fullFilePath, "####")
 							gitSync(fullFilePath)
 							fmt.Println("")
 						}
