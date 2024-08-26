@@ -1,4 +1,4 @@
-module gityup-go
+module github.com/kevwil/gityup-go
 
 go 1.23.0
 
