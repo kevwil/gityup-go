@@ -38,7 +38,7 @@ func (suite *MainTestSuite) TestExecExists_NoPath() {
 }
 
 func (suite *MainTestSuite) TestIsGit() {
-	suite.True(isGit(handleTilde("~/dotfiles")))
+	suite.True(isGit(handleTilde(".")))
 }
 
 func (suite *MainTestSuite) TestIsGit_False() {
@@ -46,7 +46,7 @@ func (suite *MainTestSuite) TestIsGit_False() {
 }
 
 func (suite *MainTestSuite) TestGitStatus() {
-	suite.True(gitStatus(handleTilde("~/dotfiles")))
+	suite.True(gitStatus(handleTilde(".")))
 }
 
 func (suite *MainTestSuite) TestGitStatus_False() {
@@ -54,10 +54,10 @@ func (suite *MainTestSuite) TestGitStatus_False() {
 }
 
 func (suite *MainTestSuite) TestGetBranchName() {
-	branch, err := getBranchName(handleTilde("~/dotfiles"))
+	branch, err := getBranchName(handleTilde("."))
 	suite.NoError(err, "received unexpected error")
 	suite.NotEmpty(branch, "branch name should not be empty")
-	suite.Equal("master", branch, "expected master branch")
+	suite.Equal("main", branch, "expected master branch")
 }
 
 func TestMainSuite(t *testing.T) {
