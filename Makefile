@@ -2,8 +2,8 @@
 
 APP_NAME=gityup-$(shell go env GOOS)-$(shell go env GOARCH)
 
-## all           : run default tasks [clean vendor lint test]
-all: clean vendor lint test
+## all           : run default tasks [vendor lint test]
+all: vendor lint test
 
 ## clean         : clean
 clean:
@@ -36,7 +36,7 @@ test:
 
 ## run           : run the app
 run:
-	@echo "\n*** run the app\n"
+	@echo "\n*** run the app using local code (not a binary)\n"
 	@go run .
 
 ## help          : print self-documented target info from this file
