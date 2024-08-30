@@ -37,7 +37,7 @@ func parseArgs() string {
 
 func checkExecExists(executable string) (string, error) {
 	if len(strings.TrimSpace(executable)) < 1 {
-		return executable, errors.New("empty executable arg not allowed")
+		return "", errors.New("empty executable arg not allowed")
 	}
 	return exec.LookPath(executable)
 }

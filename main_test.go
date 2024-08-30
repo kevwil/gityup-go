@@ -28,12 +28,14 @@ func (suite *MainTestSuite) TestExecExists() {
 	s, err := checkExecExists("bash")
 	suite.NoError(err, "received unexpected error")
 	suite.NotEmpty(s, "result should be full path to executable")
-	suite.Equal("/bin/bash", s)
+	possibleBashPaths := []string{"/bin/bash", "/usr/bin/bash", "/usr/local/bin/bash"}
+	suite.Contains(possibleBashPaths, s)
+	//suite.Equal("/bin/bash", s)
 }
 
 func (suite *MainTestSuite) TestExecExists_NoPath() {
 	s, err := checkExecExists("")
-	suite.Empty(s, "exec full path empty")
+	suite.Empty(s, "expected exec full path to be empty")
 	suite.Error(err, "expected an error")
 }
 
@@ -57,7 +59,7 @@ func (suite *MainTestSuite) TestGetBranchName() {
 	branch, err := getBranchName(handleTilde("."))
 	suite.NoError(err, "received unexpected error")
 	suite.NotEmpty(branch, "branch name should not be empty")
-	suite.Equal("main", branch, "expected master branch")
+	suite.Equal("main", branch, "expected main branch")
 }
 
 func TestMainSuite(t *testing.T) {
