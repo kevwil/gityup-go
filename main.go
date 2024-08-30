@@ -43,6 +43,7 @@ func checkExecExists(executable string) (string, error) {
 }
 
 func isGit(path string) bool {
+	// ensure subdirectory ".git" exists in project
 	gitSubDir, err := filepath.Abs(filepath.Join(path, ".git"))
 	if err != nil {
 		_ = fmt.Errorf("error resolving absolute path to '%s': %v", path, err)
@@ -81,12 +82,15 @@ func gitStatus(dir string) bool {
 }
 
 func getBranchName(dir string) (string, error) {
+	// buffer to save output
 	buf := bytes.NewBuffer(nil)
 	cmd := exec.Command("git", "branch", "--show-current")
 	cmd.Dir = dir
+	// output to buffer
 	cmd.Stdout = buf
 	cmd.Stderr = buf
 	err := cmd.Run()
+	// return output as string
 	return strings.TrimSpace(buf.String()), err
 }
 
@@ -94,8 +98,8 @@ func gitRemote(dir, branchName string) bool {
 	branchRemote := fmt.Sprintf("branch.%s.remote", branchName)
 	cmd := exec.Command("git", "config", branchRemote)
 	cmd.Dir = dir
-	cmd.Stdout = io.Discard
-	cmd.Stderr = io.Discard
+	cmd.Stdout = io.Discard // >/dev/null
+	cmd.Stderr = io.Discard // 2>&1
 	err := cmd.Run()
 	if err != nil {
 		_ = fmt.Errorf("error checking git config: %v", err)
@@ -106,6 +110,7 @@ func gitRemote(dir, branchName string) bool {
 func gitSync(dir string) {
 	c1 := exec.Command("git", "smart-pull")
 	c1.Dir = dir
+	// show output in shell
 	c1.Stdout = os.Stdout
 	c1.Stderr = os.Stderr
 	err := c1.Run()
