@@ -30,12 +30,12 @@ build: go.mod
 	@go build -mod vendor -a -o $(APP_NAME) .
 
 ## test          : run tests
-test:
+test: go.mod
 	@echo "\n*** run tests\n"
 	@go test -mod vendor -v .
 
 ## run           : run the app
-run:
+run: go.mod
 	@echo "\n*** run the app using local code (not a binary)\n"
 	@go run .
 

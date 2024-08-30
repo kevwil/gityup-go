@@ -26,6 +26,26 @@ make
 make build
 ```
 
+### Linting
+
+The linting functionality comes from installing these tools:
+
+- goimports
+
+```bash
+go install golang.org/x/tools/cmd/goimports@latest
+```
+
+- golangci-lint
+
+<https://golangci-lint.run/welcome/install/>
+
+Then you can run the lint make target:
+
+```bash
+make lint
+```
+
 ### Build for other platforms
 
 ```bash
