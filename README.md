@@ -58,6 +58,7 @@ make build
 
 - Haskell: <https://github.com/kevwil/gityup-haskell>
 - Lua: <https://github.com/kevwil/gityup-lua>
+- Python: <https://github.com/kevwil/gityup-py>
 
 ## Footnotes
 
