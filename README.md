@@ -36,6 +36,12 @@ The linting functionality comes from installing these tools:
 go install golang.org/x/tools/cmd/goimports@latest
 ```
 
+- staticcheck
+
+```bash
+go install honnef.co/go/tools/cmd/staticcheck@latest
+```
+
 - golangci-lint
 
 <https://golangci-lint.run/welcome/install/>
@@ -52,6 +58,28 @@ make lint
 export GOOS=linux
 export GOARCH=amd64
 make build
+```
+
+## Security
+
+There's a nice blog post [here](https://jarosz.dev/article/writing-secure-go-code/) which I've tried to implement here.
+
+Many of the recommended tools are included in the golangci-lint call in the Linting step.
+
+### Vulnerabilities check
+
+The makefile has targets for running security scans.
+
+- govulncheck
+
+```bash
+go install golang.org/x/vuln/cmd/govulncheck@latest
+```
+
+Then you can run the vuln make target:
+
+```bash
+make vuln
 ```
 
 ## Other Languages

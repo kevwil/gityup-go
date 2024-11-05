@@ -22,7 +22,8 @@ vendor: go.mod
 lint:
 	@echo "\n*** lint and fmt the code\n"
 	@goimports -w .
-	@golangci-lint run --no-config -D gosimple -D staticcheck -D unused -D govet -D typecheck -E goconst -E gofmt -E goimports -E gosec -E prealloc -E unparam
+	@staticcheck ./...
+	@golangci-lint run --no-config -D staticcheck -E goconst -E gofmt -E gosec -E prealloc -E unparam
 
 ## build         : build production container image
 build: go.mod
@@ -33,6 +34,17 @@ build: go.mod
 test: go.mod
 	@echo "\n*** run tests\n"
 	@go test -mod vendor -v .
+
+_vuln_code: go.mod
+	@echo "\n*** vuln check on code base\n"
+	@govulncheck
+
+_vuln_binary: build $(APP_NAME)
+	@echo "\n*** vuln check on binary file\n"
+	@govulncheck -mode binary -show verbose $(APP_NAME)
+
+## vuln          : run govulncheck on code and binary
+vuln: _vuln_code _vuln_binary
 
 ## run           : run the app
 run: go.mod
