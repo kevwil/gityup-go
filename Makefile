@@ -39,7 +39,7 @@ _vuln_code: go.mod
 	@echo "\n*** vuln check on code base\n"
 	@govulncheck
 
-_vuln_binary: build $(APP_NAME)
+_vuln_binary: $(APP_NAME)
 	@echo "\n*** vuln check on binary file\n"
 	@govulncheck -mode binary -show verbose $(APP_NAME)
 
