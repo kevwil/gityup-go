@@ -84,7 +84,7 @@ func gitStatus(dir string) bool {
 func getBranchName(dir string) (string, error) {
 	// buffer to save output
 	buf := bytes.NewBuffer(nil)
-	cmd := exec.Command("git", "branch", "--show-current")
+	cmd := exec.Command("git", "branch", "--show-current") // #nosec G204
 	cmd.Dir = dir
 	// output to buffer
 	cmd.Stdout = buf
@@ -96,7 +96,7 @@ func getBranchName(dir string) (string, error) {
 
 func gitRemote(dir, branchName string) bool {
 	branchRemote := fmt.Sprintf("branch.%s.remote", branchName)
-	cmd := exec.Command("git", "config", branchRemote)
+	cmd := exec.Command("git", "config", branchRemote) // #nosec G204
 	cmd.Dir = dir
 	cmd.Stdout = io.Discard // >/dev/null
 	cmd.Stderr = io.Discard // 2>&1

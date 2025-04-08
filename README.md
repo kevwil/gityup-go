@@ -46,6 +46,12 @@ go install honnef.co/go/tools/cmd/staticcheck@latest
 
 <https://golangci-lint.run/welcome/install/>
 
+- gosec
+
+```bash
+go install github.com/securego/gosec/v2/cmd/gosec@latest
+```
+
 Then you can run the lint make target:
 
 ```bash

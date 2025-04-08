@@ -16,14 +16,16 @@ vendor: go.mod
 	@echo "\n*** update go vendor folder and modules\n"
 	@go mod vendor
 	@go mod verify
-	@go mod tidy -v -compat=1.23
+	@go mod tidy -v -compat=1.24
 
 ## lint          : syntax checking and formatting
 lint:
 	@echo "\n*** lint and fmt the code\n"
 	@goimports -w .
 	@staticcheck ./...
-	@golangci-lint run --no-config -D staticcheck -E goconst -E gofmt -E gosec -E prealloc -E unparam
+	@golangci-lint run --no-config -E goconst -E prealloc -E unparam
+	@gosec -quiet ./...
+	@golangci-lint fmt --no-config -E gofmt
 
 ## build         : build production container image
 build: go.mod
