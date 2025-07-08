@@ -68,7 +68,7 @@ make build
 
 ## Security
 
-There's a nice blog post [here](https://jarosz.dev/article/writing-secure-go-code/) which I've tried to implement here.
+There's a nice blog post [about writing secure go code](https://jarosz.dev/article/writing-secure-go-code/) which I've tried to implement here.
 
 Many of the recommended tools are included in the golangci-lint call in the Linting step.
 
@@ -96,4 +96,4 @@ make vuln
 
 ## Footnotes
 
-[^1]: git-smart Ruby gem <https://github.com/kevwil/git-smart> which is a fork from [here](https://github.com/geelen/git-smart) with some fixes.
+[^1]: git-smart Ruby gem <https://github.com/kevwil/git-smart> which is a fork from [the original](https://github.com/geelen/git-smart) with some fixes.
