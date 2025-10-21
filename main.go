@@ -3,6 +3,7 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"flag"
 	"fmt"
@@ -12,7 +13,10 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"time"
 )
+
+const commandTimeout = 10 * time.Second
 
 // ErrEmptyExec is thrown when the executable arg to checkExecExists is empty.
 var ErrEmptyExec = errors.New("empty executable arg not allowed")
@@ -75,9 +79,12 @@ func isGit(path string) bool {
 }
 
 func gitStatus(dir string) bool {
-	command1 := exec.Command("git", "status")
+	ctx, cancel := context.WithTimeout(context.Background(), commandTimeout)
+	defer cancel()
+
+	command1 := exec.CommandContext(ctx, "git", "status")
 	command1.Dir = dir
-	command2 := exec.Command("grep", "nothing to commit")
+	command2 := exec.CommandContext(ctx, "grep", "nothing to commit")
 	command2.Stdin, _ = command1.StdoutPipe()
 	command2.Stdout = io.Discard
 	command2.Stderr = io.Discard
@@ -103,7 +110,11 @@ func gitStatus(dir string) bool {
 func getBranchName(dir string) (string, error) {
 	// buffer to save output
 	buf := bytes.NewBuffer(nil)
-	cmd := exec.Command("git", "branch", "--show-current") // #nosec G204
+
+	ctx, cancel := context.WithTimeout(context.Background(), commandTimeout)
+	defer cancel()
+
+	cmd := exec.CommandContext(ctx, "git", "branch", "--show-current") // #nosec G204
 	cmd.Dir = dir
 	// output to buffer
 	cmd.Stdout = buf
@@ -115,7 +126,11 @@ func getBranchName(dir string) (string, error) {
 
 func gitRemote(dir, branchName string) bool {
 	branchRemote := fmt.Sprintf("branch.%s.remote", branchName)
-	cmd := exec.Command("git", "config", branchRemote) // #nosec G204
+
+	ctx, cancel := context.WithTimeout(context.Background(), commandTimeout)
+	defer cancel()
+
+	cmd := exec.CommandContext(ctx, "git", "config", branchRemote) // #nosec G204
 	cmd.Dir = dir
 	cmd.Stdout = io.Discard // >/dev/null
 	cmd.Stderr = io.Discard // 2>&1
@@ -129,7 +144,10 @@ func gitRemote(dir, branchName string) bool {
 }
 
 func gitSync(dir string) {
-	command1 := exec.Command("git", "smart-pull")
+	ctx, cancel := context.WithTimeout(context.Background(), commandTimeout)
+	defer cancel()
+
+	command1 := exec.CommandContext(ctx, "git", "smart-pull")
 	command1.Dir = dir
 	// show output in shell
 	command1.Stdout = os.Stdout
@@ -141,7 +159,7 @@ func gitSync(dir string) {
 	}
 	// boolean and (&&)
 	if command1.ProcessState.Success() {
-		command2 := exec.Command("git", "remote", "update", "origin", "--prune")
+		command2 := exec.CommandContext(ctx, "git", "remote", "update", "origin", "--prune")
 		command2.Dir = dir
 		command2.Stdout = os.Stdout
 		command2.Stderr = os.Stderr

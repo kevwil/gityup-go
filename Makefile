@@ -16,7 +16,7 @@ vendor: go.mod
 	@echo "\n*** update go vendor folder and modules\n"
 	@go mod vendor
 	@go mod verify
-	@go mod tidy -v -compat=1.24
+	@go mod tidy -v -compat=1.25
 
 ## lint          : syntax checking and formatting
 lint:
