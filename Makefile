@@ -1,4 +1,4 @@
-.PHONY: help all vendor build test run
+.PHONY: help all vendor build test run build-linux
 
 APP_NAME=gityup-$(shell go env GOOS)-$(shell go env GOARCH)
 
@@ -16,7 +16,7 @@ vendor: go.mod
 	@echo "\n*** update go vendor folder and modules\n"
 	@go mod vendor
 	@go mod verify
-	@go mod tidy -v -compat=1.25
+	@go mod tidy -v -compat=1.27
 
 ## lint          : syntax checking and formatting
 lint:
@@ -31,6 +31,11 @@ lint:
 build: go.mod
 	@echo "\n*** build app\n"
 	@go build -mod vendor -a -o $(APP_NAME) .
+
+## build-linux   : cross-platform build for linux
+build-linux: go.mod
+	@echo "\n*** cross-platform"
+	@GOOS=linux GOARCH=amd64 $(MAKE) build
 
 ## test          : run tests
 test: go.mod
