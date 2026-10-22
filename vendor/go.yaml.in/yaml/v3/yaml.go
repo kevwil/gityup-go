@@ -17,7 +17,7 @@
 //
 // Source code and other details for the project are available at GitHub:
 //
-//	https://github.com/go-yaml/yaml
+//	https://github.com/yaml/go-yaml
 package yaml
 
 import (
@@ -273,6 +273,16 @@ func (e *Encoder) SetIndent(spaces int) {
 		panic("yaml: cannot indent to a negative number of spaces")
 	}
 	e.encoder.indent = spaces
+}
+
+// CompactSeqIndent makes it so that '- ' is considered part of the indentation.
+func (e *Encoder) CompactSeqIndent() {
+	e.encoder.emitter.compact_sequence_indent = true
+}
+
+// DefaultSeqIndent makes it so that '- ' is not considered part of the indentation.
+func (e *Encoder) DefaultSeqIndent() {
+	e.encoder.emitter.compact_sequence_indent = false
 }
 
 // Close closes the encoder by writing any remaining data.
